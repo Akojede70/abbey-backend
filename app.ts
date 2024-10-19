@@ -1,6 +1,8 @@
 import 'dotenv/config'
 import 'express-async-errors'
 import authRouter from './routes/auth'
+import signInUser from './routes/signin-user'
+import userController from './routes/user-controller'
 import {connectDB} from './db/database';
 
 // extra security package
@@ -32,6 +34,8 @@ app.use(express.json())
 
 // routes
 app.use('/api/v1/auth', authRouter )
+app.use('/api/v1/', signInUser )
+app.use('/api/v1/', userController )
 app.use(errorHandler)
 // error handler
 app.use(notFoundMiddleware)

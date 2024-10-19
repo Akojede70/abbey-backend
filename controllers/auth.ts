@@ -5,7 +5,8 @@ import BadRequestError from "../errors/bad-request";
 import asyncWrapper from "../middleware/async";
 import bcrypt from 'bcrypt';
 
-export const register = async (req: Request, res: Response) => {
+export const register =  asyncWrapper (async (req: Request, res: Response) => {
+  
   const { lastName, firstName, email, bio, password } = req.body;
   // Validate required fields
   const requiredFields = ['lastName', 'firstName', 'email', 'bio', 'password']
@@ -37,9 +38,9 @@ export const register = async (req: Request, res: Response) => {
       refreshToken,
     },
   });
-};
+});
 
-export const login = async (req: Request, res: Response) => {
+export const login = asyncWrapper (async (req: Request, res: Response) => {
   const { email, password } = req.body;
 
   const requiredFields = ['email', 'password'];
@@ -76,7 +77,7 @@ export const login = async (req: Request, res: Response) => {
       refreshToken,
     },
   });
-};
+});
 
 export default {
   register: asyncWrapper(register),
