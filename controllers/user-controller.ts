@@ -73,7 +73,56 @@ export const getAllUsers = asyncWrapper(async (req: Request, res: Response) => {
     });
 });
 
+export const followUser = asyncWrapper(async (req: Request, res: Response) => {
+  const { followerId, followingId } = req.body; // Extract from request body
+
+  // Check if the follow record already exists
+  const existingFollow = await Follow.findOne({
+    where: {
+      followerId,
+      followingId,
+    },
+  });
+
+  if (existingFollow) {
+    throw new BadRequestError('You are already following this user.');
+  }
+
+  // Create a new follow record
+  const newFollow = await Follow.create({ followerId, followingId });
+
+  res.status(StatusCodes.CREATED).json({
+    message: 'Successfully followed the user',
+    follow: newFollow,
+  });
+});
+
+
+export const unfollowUser = asyncWrapper(async (req: Request, res: Response) => {
+  const { followerId, followingId } = req.body; // Extract from request body
+
+  // Check if the follow record exists
+  const existingFollow = await Follow.findOne({
+    where: {
+      followerId,
+      followingId,
+    },
+  });
+
+  if (!existingFollow) {
+    throw new NotFoundError('You are not following this user.');
+  }
+
+  // Delete the follow record
+  await existingFollow.destroy();
+
+  res.status(StatusCodes.OK).json({
+    message: 'Successfully unfollowed the user',
+  });
+});
   export default {
     getAllUsers,
     getUserById,
+    unfollowUser,
+    followUser,
   };
