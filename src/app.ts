@@ -16,6 +16,8 @@ const app = express()
 
 import notFoundMiddleware from './middleware/not-found'
 import errorHandler from './middleware/error-handler';
+// import unauthenticatedError from './middleware/unauthentication';
+
 
 
 // app.set ('trust proxy', 1);
@@ -31,13 +33,17 @@ app.use(express.json())
 // app.use(helmet())
 // app.use(cors())
 
+// error handler
+// app.use(unauthenticatedError)
 
 // routes
 app.use('/api/v1/auth', authRouter )
 app.use('/api/v1/', signInUser )
 app.use('/api/v1/', userController )
+
+// error
 app.use(errorHandler)
-// error handler
+
 app.use(notFoundMiddleware)
 
 
