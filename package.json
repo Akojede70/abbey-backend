@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
-  "type": "module",
+  
   "scripts": {
-    "dev": "nodemon app.mts"
+    "dev": "nodemon app.ts"
   },
   "dependencies": {
     "@sequelize/postgres": "^7.0.0-alpha.43",
