@@ -33,7 +33,7 @@ app.use(express_1.default.json());
 app.use('/api/v1/auth', auth_1.default);
 app.use('/api/v1/', signin_user_1.default);
 app.use('/api/v1/', user_controller_1.default);
-app.use(error_handler_1.default);
+app.use(error_handler_1.default); 
 // error handler
 app.use(not_found_1.default);
 const port = process.env.PORT || 5000;
