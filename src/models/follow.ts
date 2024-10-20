@@ -1,7 +1,7 @@
 
 
 import { Model, DataTypes, Optional } from 'sequelize';
-import { sequelize } from "../db/database";
+import db from "../db/database";
 import UserRegistration from './registration';
 
 
@@ -54,7 +54,7 @@ Follow.init(
     },
   },
   {
-    sequelize,
+    sequelize: db,
     modelName: 'Follow',
   }
 );

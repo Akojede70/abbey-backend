@@ -3,7 +3,7 @@ import 'express-async-errors'
 import authRouter from './routes/auth'
 import signInUser from './routes/signin-user'
 import userController from './routes/user-controller'
-import {connectDB} from './db/database';
+
 
 // extra security package
 // import helmet from 'helmet'
@@ -17,7 +17,7 @@ const app = express()
 import notFoundMiddleware from './middleware/not-found'
 import errorHandler from './middleware/error-handler';
 
-connectDB()
+
 // app.set ('trust proxy', 1);
 // app.use(
 //     rateLimiter({

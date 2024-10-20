@@ -1,5 +1,5 @@
 import { Model, DataTypes, Optional } from 'sequelize';
-import { sequelize } from "../db/database";
+import db from "../db/database";
 import bcrypt from 'bcrypt';
 
 interface UserRegistrationAttributes {
@@ -90,7 +90,7 @@ UserRegistration.init({
     },
   },
 }, {
-  sequelize,
+  sequelize: db,
   tableName: 'registrations',
   timestamps: true,
 });
