@@ -3,14 +3,16 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
+
 const sequelize = new Sequelize(
-  "mydb",
+  process.env.DB_DATABASE!,
   process.env.DB_USER!,
-  "#Peter70",
+  process.env.DB_PASSWORD,
   {
-    dialect: "mysql",
+    dialect: "postgres",
     host: process.env.HOST,
     port: Number (process.env.DB_PORT),
+    logging: false,
     pool: {
       max: 100,
       min: 0,
@@ -25,9 +27,9 @@ const connectDB = async () => {
   try {
     await sequelize.authenticate();
     await sequelize.sync();
-    console.log("Connected to the MySQL Server with Sequelize");
+    console.log("Connected to the postgres Server with Sequelize");
   } catch (error: any) {
-    console.error("Error connecting to server with Sequelize:", error.message); 
+    console.error("Error connecting to server with Sequelize:", ); 
   }
 };
 

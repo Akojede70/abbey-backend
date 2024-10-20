@@ -1,6 +1,5 @@
 import { Model, DataTypes, Optional } from 'sequelize';
 import { sequelize } from "../db/database";
-import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 
 interface UserRegistrationAttributes {
@@ -22,31 +21,6 @@ class UserRegistration extends Model<UserRegistrationAttributes, UserRegistratio
   public bio!: string;
   public password!: string;
 
-  public createJWT(): string {
-    return jwt.sign(
-      { 
-        userId: this.id, 
-        email: this.email, 
-        lastName: this.lastName, 
-        firstName: this.firstName, 
-        bio: this.bio  }, 
-      process.env.JWT_SECRET || 'jwtSecret', 
-      { expiresIn: '5h' } 
-    );
-  }
-  public createRefreshToken(): string {
-    return jwt.sign(
-      {
-        userId: this.id,
-        email: this.email,
-        lastName: this.lastName, 
-        firstName: this.firstName, 
-        issuedAt: Date.now()
-      }, 
-      process.env.JWT_SECRET || 'jwtSecret',
-      { expiresIn: '2d' } 
-    );
-  }
 }
 
 

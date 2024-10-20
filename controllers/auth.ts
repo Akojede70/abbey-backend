@@ -4,6 +4,7 @@ import { Request, Response } from 'express';
 import BadRequestError from "../errors/bad-request";
 import asyncWrapper from "../middleware/async";
 import bcrypt from 'bcrypt';
+import { createJWT, createRefreshToken} from "../utils/generateToken"
 
 export const register =  asyncWrapper (async (req: Request, res: Response) => {
   
@@ -23,8 +24,12 @@ export const register =  asyncWrapper (async (req: Request, res: Response) => {
 
   const user = await UserRegistration.create({  lastName, firstName, email, bio, password });
   
-  const accessToken = user.createJWT();
-  const refreshToken = user.createRefreshToken();
+  const accessToken = createJWT({
+    firstName, email, userId: user.id,
+  });
+  const refreshToken = createRefreshToken({
+    firstName, email, userId: user.id,
+  });
 
   res.status(StatusCodes.CREATED).json({
     message: "Registration Successful",
@@ -62,8 +67,12 @@ export const login = asyncWrapper (async (req: Request, res: Response) => {
     throw new BadRequestError("Invalid credentials");
   }
 
-  const accessToken = user.createJWT();
-  const refreshToken = user.createRefreshToken();
+  const accessToken = createJWT({
+    firstName: user.firstName, email: user.email, userId: user.id,
+  });
+  const refreshToken = createRefreshToken({
+    firstName: user.firstName, email: user.email, userId: user.id,
+  });
 
   res.status(StatusCodes.OK).json({
     message: "Login Successful",

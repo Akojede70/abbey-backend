@@ -42,13 +42,13 @@ export const getAllUsers = asyncWrapper(async (req: Request, res: Response) => {
             include: [
                 {
                     model: UserRegistration,
-                    as: 'FollowerUser', // Alias for the follower user
+                    as: 'FollowerUser', 
                     attributes: ['id', 'firstName', 'lastName', 'email', 'bio'],
                 },
             ],
         }),
         Follow.findAll({
-            where: { followerId: id }, // Users that this user is following
+            where: { followerId: id }, 
             include: [
                 {
                     model: UserRegistration,
@@ -120,6 +120,7 @@ export const unfollowUser = asyncWrapper(async (req: Request, res: Response) => 
     message: 'Successfully unfollowed the user',
   });
 });
+
   export default {
     getAllUsers,
     getUserById,
