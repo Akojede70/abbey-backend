@@ -7,12 +7,13 @@ import userController from './routes/user-controller'
 
 // extra security package
 // import helmet from 'helmet'
-// import cors from 'cors';
+import cors from 'cors';
 // import rateLimiter from 'express-rate-limit'
 import express, { Request, Response, NextFunction } from 'express'; 
 
 
 const app = express()
+
 
 import notFoundMiddleware from './middleware/not-found'
 import errorHandler from './middleware/error-handler';
@@ -29,9 +30,15 @@ import errorHandler from './middleware/error-handler';
 // )
 
 // security
+const corsOptions = {
+  origin: 'https://abbey-backend-1.onrender.com', 
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], 
+  allowedHeaders: ['Content-Type', 'Authorization'], 
+  credentials: true, 
+};
 app.use(express.json())
 // app.use(helmet())
-// app.use(cors())
+app.use(cors(corsOptions));
 
 // error handler
 // app.use(unauthenticatedError)
