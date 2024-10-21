@@ -4,7 +4,7 @@ import  unauthenticatedError   from "../middleware/unauthentication"
 
 const router: Router = express.Router()
 
-router.get('/users/:id/connection', unauthenticatedError, getUserConnections)
+router.get('/users/:userId/connection', unauthenticatedError, getUserConnections)
 
 export default router;
 
