@@ -3,7 +3,6 @@ import UserRegistration from "../models/registration";
 import { Request, Response } from 'express';
 import BadRequestError from "../errors/bad-request";
 import asyncWrapper from "../middleware/async";
-import bcrypt from 'bcrypt';
 import NotFoundError from "../errors/not-found";
 import Follow from '../models/follow';
 
@@ -77,16 +76,16 @@ export const followUser = asyncWrapper(async (req: Request, res: Response) => {
   const { followerId, followingId } = req.body; // Extract from request body
 
   // Check if the follow record already exists
-  const existingFollow = await Follow.findOne({
-    where: {
-      followerId,
-      followingId,
-    },
-  });
+  // const existingFollow = await Follow.findOne({
+  //   where: {
+  //     followerId,
+  //     followingId,
+  //   },
+  // });
 
-  if (existingFollow) {
-    throw new BadRequestError('You are already following this user.');
-  }
+  // if (existingFollow) {
+  //   throw new BadRequestError('You are already following this user.');
+  // }
 
   // Create a new follow record
   const newFollow = await Follow.create({ followerId, followingId });
