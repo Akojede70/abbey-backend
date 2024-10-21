@@ -33,7 +33,8 @@ import errorHandler from './middleware/error-handler';
 const corsOptions = {
   origin: [
     'http://localhost:3000', 
-    'https://abbey-backend-1.onrender.com', 
+    'https://abbey-backend-1.onrender.com',
+    "https://abbey-screening.netlify.app/", 
 ], 
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], 
   allowedHeaders: ['Content-Type', 'Authorization'], 

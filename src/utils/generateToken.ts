@@ -4,6 +4,7 @@ interface TokenPayload {
   userId: number;
   email: string;
   firstName: string;
+  lastName: string;
 }
 
 // Function to create JWT
@@ -13,6 +14,7 @@ export const createJWT = (payload: TokenPayload): string => {
       userId: payload.userId,
       email: payload.email,
       firstName: payload.firstName,
+      lastName: payload.lastName,
     },
     process.env.JWT_SECRET || 'jwtSecret',
     { expiresIn: '5h' }
@@ -26,6 +28,7 @@ export const createRefreshToken = (payload: TokenPayload): string => {
       userId: payload.userId,
       email: payload.email,
       firstName: payload.firstName,
+      lastName: payload.lastName,
     },
     process.env.JWT_SECRET || 'jwtSecret',
     { expiresIn: '2d' }
