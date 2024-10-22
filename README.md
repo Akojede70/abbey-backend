@@ -23,4 +23,5 @@ There is no figma design, created the design myself
 
 ### Here is the Deployed Link 
 
+Deployed Link: https://abbey-screening.netlify.app/
 backend api: https://abbey-backend-1.onrender.com

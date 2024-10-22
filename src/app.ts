@@ -28,7 +28,11 @@ app.use(
 )
 
 const corsOptions = {
-  origin: "*",
+  origin: [
+    'http://localhost:3000', // For local development
+    'https://abbey-backend-1.onrender.com', // Your backend URL
+    'https://abbey-screening.netlify.app', // Your deployed frontend URL
+  ],
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], 
   allowedHeaders: ['Content-Type', 'Authorization'], 
   credentials: true, 
