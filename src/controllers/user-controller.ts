@@ -1,7 +1,6 @@
 import { StatusCodes } from "http-status-codes";
 import UserRegistration from "../models/registration";
 import { Request, Response } from 'express';
-import BadRequestError from "../errors/bad-request";
 import asyncWrapper from "../middleware/async";
 import NotFoundError from "../errors/not-found";
 import Follow from '../models/follow';
@@ -23,18 +22,15 @@ export const getAllUsers = asyncWrapper(async (req: Request, res: Response) => {
 
   export const getUserById = asyncWrapper(async (req: Request, res: Response) => {
     const { id } = req.params;
-
-    // Find the user by ID
     const user = await UserRegistration.findByPk(id, {
         attributes: ['id', 'lastName', 'firstName', 'email', 'bio']
     });
 
-    // Handle case where user is not found
+    
     if (!user) {
         throw new NotFoundError(`User with ID ${id} not found`);
     }
 
-    // Fetch followers and following information
     const [followers, following] = await Promise.all([
         Follow.findAll({
             where: { followingId: id }, // Users that follow this user
@@ -51,7 +47,7 @@ export const getAllUsers = asyncWrapper(async (req: Request, res: Response) => {
             include: [
                 {
                     model: UserRegistration,
-                    as: 'FollowingUser', // Alias for the following user
+                    as: 'FollowingUser',
                     attributes: ['id', 'firstName', 'lastName', 'email', 'bio'],
                 },
             ],
@@ -74,20 +70,6 @@ export const getAllUsers = asyncWrapper(async (req: Request, res: Response) => {
 
 export const followUser = asyncWrapper(async (req: Request, res: Response) => {
   const { followerId, followingId } = req.body; // Extract from request body
-
-  // Check if the follow record already exists
-  // const existingFollow = await Follow.findOne({
-  //   where: {
-  //     followerId,
-  //     followingId,
-  //   },
-  // });
-
-  // if (existingFollow) {
-  //   throw new BadRequestError('You are already following this user.');
-  // }
-
-  // Create a new follow record
   const newFollow = await Follow.create({ followerId, followingId });
 
   res.status(StatusCodes.CREATED).json({
@@ -98,7 +80,7 @@ export const followUser = asyncWrapper(async (req: Request, res: Response) => {
 
 
 export const unfollowUser = asyncWrapper(async (req: Request, res: Response) => {
-  const { followerId, followingId } = req.body; // Extract from request body
+  const { followerId, followingId } = req.body; 
 
   // Check if the follow record exists
   const existingFollow = await Follow.findOne({

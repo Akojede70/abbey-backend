@@ -25,10 +25,13 @@ export const register =  asyncWrapper (async (req: Request, res: Response) => {
   const user = await UserRegistration.create({  lastName, firstName, email, bio, password });
   
   const accessToken = createJWT({
-    firstName, email, userId: user.id,
+    firstName, 
+    lastName, 
+    email, 
+    userId: user.id,
   });
   const refreshToken = createRefreshToken({
-    firstName, email, userId: user.id,
+    firstName, lastName, email, userId: user.id,
   });
 
   res.status(StatusCodes.CREATED).json({
@@ -68,10 +71,13 @@ export const login = asyncWrapper (async (req: Request, res: Response) => {
   }
 
   const accessToken = createJWT({
-    firstName: user.firstName, email: user.email, userId: user.id,
+    firstName: user.firstName, 
+    lastName: user.lastName, 
+    email: user.email, 
+    userId: user.id,
   });
   const refreshToken = createRefreshToken({
-    firstName: user.firstName, email: user.email, userId: user.id,
+    firstName: user.firstName, lastName: user.lastName, email: user.email, userId: user.id,
   });
 
   res.status(StatusCodes.OK).json({

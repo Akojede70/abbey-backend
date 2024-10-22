@@ -4,11 +4,10 @@ import authRouter from './routes/auth'
 import signInUser from './routes/signin-user'
 import userController from './routes/user-controller'
 
-
 // extra security package
-// import helmet from 'helmet'
+import helmet from 'helmet'
 import cors from 'cors';
-// import rateLimiter from 'express-rate-limit'
+import rateLimiter from 'express-rate-limit'
 import express, { Request, Response, NextFunction } from 'express'; 
 
 
@@ -17,19 +16,17 @@ const app = express()
 
 import notFoundMiddleware from './middleware/not-found'
 import errorHandler from './middleware/error-handler';
-// import unauthenticatedError from './middleware/unauthentication';
 
 
 
-// app.set ('trust proxy', 1);
-// app.use(
-//     rateLimiter({
-//         windowMs: 15 * 60 * 1000, // 15 minutes
-//         max: 100, // limit each IP to 100 requests per windowMS
-//     })
-// )
+app.set ('trust proxy', 1);
+app.use(
+    rateLimiter({
+        windowMs: 15 * 60 * 1000, // 15 minutes
+        max: 100, // limit each IP to 100 requests per windowMS
+    })
+)
 
-// security
 const corsOptions = {
   origin: "*",
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], 
@@ -37,11 +34,10 @@ const corsOptions = {
   credentials: true, 
 };
 app.use(express.json())
-// app.use(helmet())
+app.use(helmet())
 app.use(cors(corsOptions));
 
 // error handler
-// app.use(unauthenticatedError)
 
 // routes
 app.use('/api/v1/auth', authRouter )
@@ -55,8 +51,6 @@ app.use(notFoundMiddleware)
 
 
 const port = process.env.PORT || 5000;
-
-
 
     app.listen(port, () =>
       console.log(`Server is listening on port ${port}...`)
