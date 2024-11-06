@@ -20,8 +20,7 @@ const unauthenticatedError = async (req: AuthenticatedRequest, res: Response, ne
   const token = authHeader.split(' ')[1];
 
   try {
-    const payload = jwt.verify(token, process.env.JWT_SECRET as string) as JwtPayload;
-    console.log(process.env.JWT_SECRET); 
+    const payload = jwt.verify(token, process.env.JWT_SECRET as string) as JwtPayload; 
     req.user = { userId: payload.userId, name: payload.name };
     next();
   } catch (error) {

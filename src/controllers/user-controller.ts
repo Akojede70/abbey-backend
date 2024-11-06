@@ -1,13 +1,15 @@
 import { StatusCodes } from "http-status-codes";
 import UserRegistration from "../models/registration";
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import asyncWrapper from "../middleware/async";
 import NotFoundError from "../errors/not-found";
 import Follow from '../models/follow';
+import { Op } from "sequelize";
 
 export const getAllUsers = asyncWrapper(async (req: Request, res: Response) => {
     const users = await UserRegistration.findAll({
-      attributes: ['id', 'lastName', 'firstName', 'email', 'bio'] 
+      attributes: ['id', 'lastName', 'firstName', 'email', 'bio'], 
+      order: [[ "createdAt", "DESC"]]
     });
     
     if (!users || users.length === 0) {
@@ -102,9 +104,45 @@ export const unfollowUser = asyncWrapper(async (req: Request, res: Response) => 
   });
 });
 
+export const searchUsers = asyncWrapper(async (req: Request, res: Response) => {
+  const { query } = req.query;
+
+  if (!query || typeof query !== "string") {
+    res.status(StatusCodes.BAD_REQUEST).json({
+      message: 'Search query is required',
+    });
+    return;
+  }
+
+  const searchQuery = String(query);
+  console.log('Query:', searchQuery, 'Type:', typeof searchQuery);
+
+  const users = await UserRegistration.findAll({
+    attributes: ['id', 'lastName', 'firstName', 'email', 'bio'],
+    where: {
+      [Op.or]: [
+        { firstName: { [Op.iLike]: `%${searchQuery}%` } },
+        { lastName: { [Op.iLike]: `%${searchQuery}%` } },
+        { email: { [Op.iLike]: `%${searchQuery}%` } },
+      ],
+    },
+    order: [['createdAt', 'DESC']],
+  });
+
+  if (!users || users.length === 0) {
+    throw new NotFoundError('No users found matching the search criteria');
+  }
+
+  res.status(StatusCodes.OK).json({
+    message: 'Search results',
+    users,
+  });
+});
+
   export default {
     getAllUsers,
     getUserById,
     unfollowUser,
     followUser,
+    searchUsers,
   };

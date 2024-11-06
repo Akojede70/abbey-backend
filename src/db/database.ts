@@ -9,10 +9,10 @@ const mysqlClient = new Sequelize(process.env.DB_DATABASE!, process.env.DB_USER!
     port: parseInt(process.env.DB_PORT!),
     logging: false,
     pool: {
-        max: 2,
-        min: 0,
+        max: 10, 
+        min: 2,
         acquire: 3000,
-        idle: 0
+        idle: 0 // no idle time until the application is closed
     },
     define: {
         freezeTableName: true

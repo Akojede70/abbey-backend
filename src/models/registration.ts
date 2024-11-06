@@ -5,7 +5,7 @@ import bcrypt from 'bcrypt';
 interface UserRegistrationAttributes {
   id: number;
   lastName: string;
-  firstName: string;
+  firstName: string; 
   email: string;
   bio: string;
   password: string;
@@ -21,7 +21,7 @@ class UserRegistration extends Model<UserRegistrationAttributes, UserRegistratio
   public bio!: string;
   public password!: string;
 
-}
+} 
 
 
 UserRegistration.init({

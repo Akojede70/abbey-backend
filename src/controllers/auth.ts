@@ -35,7 +35,7 @@ export const register =  asyncWrapper (async (req: Request, res: Response) => {
   });
 
   res.status(StatusCodes.CREATED).json({
-    message: "Registration Successful",
+    message: "Registration  Successful",
     user: {
       id: user.id,
       lastName: user.lastName,

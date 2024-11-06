@@ -60,7 +60,8 @@ Follow.init(
 );
 
 // Set up associations
-Follow.belongsTo(UserRegistration, { foreignKey: 'followerId', as: 'FollowerUser' });
+Follow.belongsTo(UserRegistration, { foreignKey: 'followerId', as: 'FollowerUser' }); 
+// This is the user who initiates the following relationship.
 Follow.belongsTo(UserRegistration, { foreignKey: 'followingId', as: 'FollowingUser' });
 
 export default Follow;
