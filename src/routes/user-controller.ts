@@ -6,7 +6,7 @@ const router: Router = express.Router()
 
 router.get('/users', unauthenticatedError, getAllUsers)
 router.get('/users/:id', unauthenticatedError, getUserById)
-router.get('/users/search', unauthenticatedError, searchUsers)
+router.get('/search', unauthenticatedError, searchUsers)
 router.post('/users/follow', unauthenticatedError, followUser)
 router.delete('/users/unfollow', unauthenticatedError, unfollowUser)
 
