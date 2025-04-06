@@ -2,8 +2,7 @@ import { Sequelize } from "sequelize";
 import dotenv from "dotenv"; 
 dotenv.config();
 
-
-const mysqlClient = new Sequelize(process.env.DB_DATABASE!, process.env.DB_USER!, process.env.DB_PASSWORD, {
+const mysqlClient = new Sequelize(process.env.DB_DATABASE!, process.env.DB_USER!, process.env.DB_PASSWORD!, {
     host: process.env.DB_HOST,
     dialect: "postgres",
     port: parseInt(process.env.DB_PORT!),
@@ -18,6 +17,7 @@ const mysqlClient = new Sequelize(process.env.DB_DATABASE!, process.env.DB_USER!
         freezeTableName: true
     }
 });
+
 
 mysqlClient
     .sync({ alter: true })

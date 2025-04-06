@@ -27,19 +27,19 @@ app.use(
     })
 )
 
-const corsOptions = {
-  origin: [
-    'http://localhost:3000', // For local development
-    'https://abbey-backend-1.onrender.com', // Your backend URL
-    'https://abbey-screening.netlify.app', // Your deployed frontend URL
-  ],
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], 
-  allowedHeaders: ['Content-Type', 'Authorization'], 
-  credentials: true,  // cookies and HTTP authentication information (like headers with credentials) to be sent along with requests from your front-end to your back-end server.
-};
+// const corsOptions = {
+//   origin: [
+//     'http://localhost:3000', // For local development
+//     'https://abbey-backend-1.onrender.com', // Your backend URL
+//     'https://abbey-screening.netlify.app', // Your deployed frontend URL
+//   ],
+//   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], 
+//   allowedHeaders: ['Content-Type', 'Authorization'], 
+//   credentials: true,  // cookies and HTTP authentication information (like headers with credentials) to be sent along with requests from your front-end to your back-end server.
+// };
 app.use(express.json())
 app.use(helmet())
-app.use(cors(corsOptions));
+// app.use(cors(corsOptions));
 
 // error handler
 
